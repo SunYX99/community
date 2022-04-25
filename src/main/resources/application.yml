@@ -1,3 +1,5 @@
+
+
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
@@ -6,8 +8,31 @@ spring:
     password: 862624436
   thymeleaf:
     cache: false
+  mail:
+    host: smtp.163.com
+    username: sunyuxiang99@163.com
+    password: RZBJJVXJGDRFJMOZ
+    default-encoding: utf-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
 logging:
   level:
     community: debug
   file:
     path: d:/work/data/nowcoder/community
+
+#community
+community:
+  path:
+    domain: http://localhost:8080
+server:
+  servlet:
+    context-path: /community
+mybatis-plus:
+  configuration:
+    use-generated-keys: true
