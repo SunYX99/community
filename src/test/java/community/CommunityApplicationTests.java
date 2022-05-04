@@ -1,14 +1,18 @@
 package community;
 
 import community.entity.DiscussPost;
+import community.entity.LoginTicket;
 import community.entity.User;
 import community.mapper.DisscussPostMapper;
+import community.mapper.LoginTicketMapper;
 import community.mapper.UserMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.ansi.AnsiOutput;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
@@ -18,6 +22,8 @@ class CommunityApplicationTests {
     private UserMapper userMapper;
     @Autowired
     private DisscussPostMapper disscussPostMapper;
+    @Autowired
+    LoginTicketMapper loginTicketMapper;
 
     @Test
     void contextLoads() {
@@ -52,5 +58,23 @@ class CommunityApplicationTests {
         int count = disscussPostMapper.selectDiscussPostRows(149);
         System.out.println(count);
     }
+    @Test
+    void testInsertLoginTicket(){
+        LoginTicket loginTicket = new LoginTicket();
+        loginTicket.setUserId(101);
+        loginTicket.setTicket("abc");
+        loginTicket.setStatus(0);
+        loginTicket.setExpired(new Date(System.currentTimeMillis() + 1000*60*10));
+        loginTicketMapper.insertLoginTicket(loginTicket);
+    }
 
+    @Test
+    void testSelectLoginTicket(){
+        LoginTicket loginTicket = loginTicketMapper.selectByTicket("abc");
+        System.out.println(loginTicket);
+
+        loginTicketMapper.updateStatus(loginTicket.getTicket(),1);
+        loginTicket = loginTicketMapper.selectByTicket("abc");
+        System.out.println(loginTicket);
+    }
 }
